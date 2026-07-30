@@ -1,0 +1,128 @@
+{
+  "info": {
+    "name": "Student Management System API",
+    "description": "Postman REST API Collection for Spring Boot backend & Supabase PostgreSQL DB",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@sms.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"teacher@sms.com\",\n  \"password\": \"teacher123\",\n  \"fullName\": \"Dr. Jane Doe\",\n  \"role\": \"ROLE_TEACHER\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "auth", "register"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/students",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "students"]
+            }
+          }
+        },
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentIdNumber\": \"STU-2026-099\",\n  \"firstName\": \"Sarah\",\n  \"lastName\": \"Connor\",\n  \"email\": \"sarah.connor@university.edu\",\n  \"phone\": \"+1-555-0999\",\n  \"department\": \"Cyber Security\",\n  \"enrollmentDate\": \"2026-07-01\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/students",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "students"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "courses"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Statistics",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/dashboard/stats",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "dashboard", "stats"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
