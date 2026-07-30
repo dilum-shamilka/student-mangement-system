@@ -47,25 +47,25 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
   };
 
   return (
-      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg p-6 space-y-4 shadow-2xl relative">
+      <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-lg p-6 space-y-4 shadow-2xl relative">
 
           {/* Header */}
-          <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-            <div className="flex items-center gap-2 text-white font-bold text-lg">
-              <Mail className="w-5 h-5 text-cyan-400" />
+          <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+            <div className="flex items-center gap-2 text-slate-800 font-bold text-lg">
+              <Mail className="w-5 h-5 text-indigo-600" />
               <h2>Send Email to Student</h2>
             </div>
             <button
                 onClick={onClose}
-                className="text-slate-400 hover:text-white bg-slate-800 p-1.5 rounded-lg transition-colors"
+                className="text-slate-400 hover:text-slate-700 bg-slate-100 p-1.5 rounded-lg transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {successMessage && (
-              <div className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-sm p-3 rounded-xl text-center font-medium">
+              <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm p-3 rounded-xl text-center font-medium">
                 {successMessage}
               </div>
           )}
@@ -73,38 +73,38 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
           {/* Form */}
           <form onSubmit={handleSendEmail} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-xs text-slate-400 font-medium">Recipient Email</label>
+              <label className="text-xs text-slate-600 font-medium">Recipient Email</label>
               <input
                   type="email"
                   required
                   value={recipient}
                   onChange={(e) => setRecipient(e.target.value)}
                   placeholder="student@example.com"
-                  className="w-full bg-slate-800 text-white rounded-xl px-4 py-2.5 outline-none border border-slate-700 focus:border-cyan-500 text-sm"
+                  className="w-full bg-slate-50 text-slate-800 rounded-xl px-4 py-2.5 outline-none border border-slate-200 focus:border-indigo-500 text-sm"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs text-slate-400 font-medium">Subject</label>
+              <label className="text-xs text-slate-600 font-medium">Subject</label>
               <input
                   type="text"
                   required
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   placeholder="Enter email subject"
-                  className="w-full bg-slate-800 text-white rounded-xl px-4 py-2.5 outline-none border border-slate-700 focus:border-cyan-500 text-sm"
+                  className="w-full bg-slate-50 text-slate-800 rounded-xl px-4 py-2.5 outline-none border border-slate-200 focus:border-indigo-500 text-sm"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs text-slate-400 font-medium">Message</label>
+              <label className="text-xs text-slate-600 font-medium">Message</label>
               <textarea
                   required
                   rows={4}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Write your message here..."
-                  className="w-full bg-slate-800 text-white rounded-xl px-4 py-2.5 outline-none border border-slate-700 focus:border-cyan-500 text-sm resize-none"
+                  className="w-full bg-slate-50 text-slate-800 rounded-xl px-4 py-2.5 outline-none border border-slate-200 focus:border-indigo-500 text-sm resize-none"
               />
             </div>
 
@@ -112,14 +112,14 @@ export default function EmailModal({ isOpen, onClose }: EmailModalProps) {
               <button
                   type="button"
                   onClick={onClose}
-                  className="flex-1 bg-slate-800 hover:bg-slate-700 text-white py-2.5 rounded-xl font-medium text-sm transition-colors"
+                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl font-medium text-sm transition-colors"
               >
                 Cancel
               </button>
               <button
                   type="submit"
                   disabled={isSending}
-                  className="flex-1 flex items-center justify-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white py-2.5 rounded-xl font-medium text-sm transition-colors disabled:opacity-50"
+                  className="flex-1 flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-xl font-medium text-sm transition-colors disabled:opacity-50 shadow-md shadow-indigo-500/20"
               >
                 <Send className="w-4 h-4" />
                 {isSending ? 'Sending...' : 'Send Email'}

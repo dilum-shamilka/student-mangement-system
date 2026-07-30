@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import StudentModal from '../../components/StudentModal';
-import EmailModal from '../../components/EmailModal'; // 1. EmailModal එක ඉම්පෝට් කරන්න
+import EmailModal from '../../components/EmailModal';
 
 import {
   Plus,
@@ -24,12 +24,11 @@ import {
 
 import { Student } from '../../types';
 
-
 export default function StudentsPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false); // 2. Email Modal එක සඳහා state එකක් එකතු කරන්න
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [editingStudent, setEditingStudent] = useState<Student | null>(null);
 
   const loadStudents = async () => {
@@ -92,26 +91,26 @@ export default function StudentsPage() {
   });
 
   return (
-      <div className="flex min-h-screen bg-slate-950">
+      <div className="flex min-h-screen bg-slate-50 text-slate-800">
         <Sidebar />
 
-        <div className="flex-1 flex flex-col">
-          {/* 3. Header එකට onOpenEmail prop එක ලබා දෙන්න */}
+        <div className="flex-1 flex flex-col min-w-0">
           <Header
               title="Student Management"
               description="Manage registered students"
               onOpenEmail={() => setIsEmailModalOpen(true)}
           />
 
-          <main className="p-6 space-y-6">
-            <div className="glass-card rounded-2xl p-4 flex justify-between items-center">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
+          <main className="p-6 space-y-6 overflow-y-auto">
+            {/* Search & Actions Bar */}
+            <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="relative w-full sm:w-auto sm:min-w-[280px]">
+                <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
                 <input
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
                     placeholder="Search student..."
-                    className="bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-sm text-white outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none focus:border-indigo-500 focus:bg-white transition-all"
                 />
               </div>
 
@@ -120,92 +119,103 @@ export default function StudentsPage() {
                     setEditingStudent(null);
                     setIsModalOpen(true);
                   }}
-                  className="flex items-center gap-2 bg-cyan-600 px-4 py-2 rounded-xl text-white"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 px-4 py-2.5 rounded-xl text-white font-medium text-xs shadow-md shadow-indigo-500/10 transition-all"
               >
                 <Plus size={16}/>
                 Add Student
               </button>
             </div>
 
-            <div className="glass-card rounded-2xl overflow-hidden">
-              <table className="w-full text-sm">
-                <thead className="bg-slate-900 text-slate-400">
-                <tr>
-                  <th className="p-4 text-left">Student ID</th>
-                  <th className="p-4 text-left">Name</th>
-                  <th className="p-4 text-left">Email</th>
-                  <th className="p-4 text-left">Phone</th>
-                  <th className="p-4 text-left">Department</th>
-                  <th className="p-4 text-left">Enrollment Date</th>
-                  <th className="p-4 text-left">Status</th>
-                  <th className="p-4">Actions</th>
-                </tr>
-                </thead>
+            {/* Students Table Container */}
+            <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-100/80 text-slate-500 uppercase font-mono text-[10px]">
+                  <tr>
+                    <th className="p-4 text-left">Student ID</th>
+                    <th className="p-4 text-left">Name</th>
+                    <th className="p-4 text-left">Email</th>
+                    <th className="p-4 text-left">Phone</th>
+                    <th className="p-4 text-left">Department</th>
+                    <th className="p-4 text-left">Enrollment Date</th>
+                    <th className="p-4 text-left">Status</th>
+                    <th className="p-4 text-center">Actions</th>
+                  </tr>
+                  </thead>
 
-                <tbody>
-                {filteredStudents.map(student => (
-                    <tr
-                        key={student.id}
-                        className="border-t border-slate-800 hover:bg-slate-900"
-                    >
-                      <td className="p-4 text-cyan-400 font-mono">
-                        {student.studentIdNumber}
-                      </td>
+                  <tbody className="divide-y divide-slate-100">
+                  {filteredStudents.map(student => (
+                      <tr
+                          key={student.id}
+                          className="hover:bg-slate-50/80 transition-colors"
+                      >
+                        <td className="p-4 text-indigo-600 font-mono font-medium">
+                          {student.studentIdNumber}
+                        </td>
 
-                      <td className="p-4 text-white">
-                        {student.firstName} {student.lastName}
-                      </td>
+                        <td className="p-4 font-medium text-slate-900">
+                          {student.firstName} {student.lastName}
+                        </td>
 
-                      <td className="p-4 text-slate-300">
-                        <div className="flex gap-2 items-center">
-                          <Mail size={14}/>
-                          {student.email}
-                        </div>
-                      </td>
+                        <td className="p-4 text-slate-600">
+                          <div className="flex gap-1.5 items-center">
+                            <Mail size={14} className="text-slate-400" />
+                            {student.email}
+                          </div>
+                        </td>
 
-                      <td className="p-4 text-slate-300">
-                        <div className="flex gap-2 items-center">
-                          <Phone size={14}/>
-                          {student.phone}
-                        </div>
-                      </td>
+                        <td className="p-4 text-slate-600">
+                          <div className="flex gap-1.5 items-center">
+                            <Phone size={14} className="text-slate-400" />
+                            {student.phone}
+                          </div>
+                        </td>
 
-                      <td className="p-4 text-slate-300">
-                        {student.department}
-                      </td>
+                        <td className="p-4 text-slate-700">
+                          {student.department}
+                        </td>
 
-                      <td className="p-4 text-slate-300">
-                        {student.enrollmentDate}
-                      </td>
+                        <td className="p-4 text-slate-500">
+                          {student.enrollmentDate}
+                        </td>
 
-                      <td className="p-4">
-                      <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs">
-                        {student.status}
-                      </span>
-                      </td>
+                        <td className="p-4">
+                          <span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold border ${
+                            student.status === 'ACTIVE'
+                              ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                              : 'bg-slate-100 text-slate-600 border-slate-200'
+                          }`}>
+                            {student.status}
+                          </span>
+                        </td>
 
-                      <td className="p-4 flex gap-2 justify-center">
-                        <button
-                            onClick={() => {
-                              setEditingStudent(student);
-                              setIsModalOpen(true);
-                            }}
-                            className="bg-slate-800 p-2 rounded-lg text-white"
-                        >
-                          <Edit3 size={15}/>
-                        </button>
+                        <td className="p-4">
+                          <div className="flex gap-1.5 justify-center">
+                            <button
+                                onClick={() => {
+                                  setEditingStudent(student);
+                                  setIsModalOpen(true);
+                                }}
+                                className="bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 p-2 rounded-lg transition-colors"
+                                title="Edit Student"
+                            >
+                              <Edit3 size={15}/>
+                            </button>
 
-                        <button
-                            onClick={() => handleDelete(student.id)}
-                            className="bg-red-500/20 text-red-400 p-2 rounded-lg"
-                        >
-                          <Trash2 size={15}/>
-                        </button>
-                      </td>
-                    </tr>
-                ))}
-                </tbody>
-              </table>
+                            <button
+                                onClick={() => handleDelete(student.id)}
+                                className="bg-rose-50 hover:bg-rose-100 text-rose-600 p-2 rounded-lg transition-colors"
+                                title="Delete Student"
+                            >
+                              <Trash2 size={15}/>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                  ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </main>
 
@@ -216,7 +226,6 @@ export default function StudentsPage() {
               initialData={editingStudent}
           />
 
-          {/* 4. Email Modal එක මෙහි render කරන්න */}
           <EmailModal
               isOpen={isEmailModalOpen}
               onClose={() => setIsEmailModalOpen(false)}

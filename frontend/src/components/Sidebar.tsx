@@ -11,11 +11,8 @@ import {
   GraduationCap
 } from 'lucide-react';
 
-
 export default function Sidebar() {
-
   const pathname = usePathname();
-
 
   const navItems = [
     {
@@ -35,34 +32,24 @@ export default function Sidebar() {
     },
   ];
 
-
-
   const handleLogout = () => {
-
     if(typeof window !== 'undefined'){
-
       localStorage.removeItem('token');
-
       localStorage.removeItem('user');
-
       window.location.href = '/login';
-
     }
-
   };
 
-
-
   return (
-
     <aside
       className="
       hidden
       md:flex
       w-64
-      glass-panel
+      bg-white
       border-r
-      border-slate-800/80
+      border-slate-200
+      shadow-sm
       flex-col
       justify-between
       h-screen
@@ -70,15 +57,9 @@ export default function Sidebar() {
       top-0
       "
     >
-
-
       {/* TOP SECTION */}
-
       <div>
-
-
         {/* Brand */}
-
         <div
           className="
           h-16
@@ -86,54 +67,46 @@ export default function Sidebar() {
           items-center
           px-6
           border-b
-          border-slate-800/60
+          border-slate-100
           gap-3
           "
         >
-
-
           <div
             className="
             w-9
             h-9
             rounded-xl
             bg-gradient-to-tr
-            from-cyan-500
-            to-indigo-600
+            from-indigo-600
+            to-violet-600
             flex
             items-center
             justify-center
             shadow-lg
-            shadow-cyan-500/20
+            shadow-indigo-500/20
             "
           >
-
             <GraduationCap
               className="w-5 h-5 text-white"
             />
-
           </div>
 
-
-
           <div>
-
             <h1
               className="
               font-bold
               text-lg
               leading-tight
-              gradient-text
+              text-slate-900
               "
             >
-              AcademiaSMS
+             DSP ACADEMY
             </h1>
-
 
             <p
               className="
               text-[10px]
-              text-slate-400
+              text-slate-500
               font-mono
               tracking-wider
               uppercase
@@ -141,18 +114,10 @@ export default function Sidebar() {
             >
               Enterprise Portal
             </p>
-
-
           </div>
-
-
         </div>
 
-
-
-
         {/* Navigation */}
-
         <nav
           className="
           p-4
@@ -160,28 +125,15 @@ export default function Sidebar() {
           mt-2
           "
         >
-
-
           {
             navItems.map((item)=>{
-
-
               const Icon = item.icon;
-
-              const isActive =
-                pathname === item.href;
-
-
+              const isActive = pathname === item.href;
 
               return (
-
                 <Link
-
                   key={item.name}
-
                   href={item.href}
-
-
                   className={`
                     flex
                     items-center
@@ -196,35 +148,27 @@ export default function Sidebar() {
 
                     ${
                       isActive
-
                       ?
-
                       `
                       bg-gradient-to-r
-                      from-cyan-500/20
-                      to-indigo-500/10
-                      text-cyan-400
+                      from-indigo-50
+                      to-indigo-100/50
+                      text-indigo-600
                       border
-                      border-cyan-500/30
-                      shadow-md
-                      shadow-cyan-500/10
+                      border-indigo-200/60
+                      shadow-sm
+                      shadow-indigo-500/5
                       `
-
                       :
-
                       `
-                      text-slate-400
-                      hover:text-slate-200
-                      hover:bg-slate-800/50
+                      text-slate-600
+                      hover:text-slate-900
+                      hover:bg-slate-100/80
                       `
                     }
                   `}
-
                 >
-
-
                   <Icon
-
                     className={`
                     w-5
                     h-5
@@ -232,87 +176,60 @@ export default function Sidebar() {
                     ${
                       isActive
                       ?
-                      'text-cyan-400'
+                      'text-indigo-600'
                       :
                       'text-slate-400'
                     }
-
                     `}
-
                   />
 
-
                   {item.name}
-
-
                 </Link>
-
               );
-
-
             })
           }
-
-
         </nav>
-
-
-
       </div>
 
-
-
-
-
       {/* USER PROFILE */}
-
-
       <div
         className="
         p-4
         border-t
-        border-slate-800/60
+        border-slate-100
         "
       >
-
-
-
         <div
           className="
-          bg-slate-900/60
+          bg-slate-50
           rounded-xl
           p-3
           mb-3
           border
-          border-slate-800
+          border-slate-200/80
           flex
           items-center
           gap-3
           "
         >
-
-
           <div
             className="
             w-8
             h-8
             rounded-full
-            bg-slate-800
+            bg-indigo-100
             flex
             items-center
             justify-center
             text-xs
             font-bold
-            text-cyan-400
+            text-indigo-600
             border
-            border-cyan-500/30
+            border-indigo-200
             "
           >
             AD
           </div>
-
-
-
 
           <div
             className="
@@ -320,44 +237,31 @@ export default function Sidebar() {
             overflow-hidden
             "
           >
-
             <p
               className="
               text-xs
               font-semibold
-              text-slate-200
+              text-slate-800
               truncate
               "
             >
               System Admin
             </p>
 
-
             <p
               className="
               text-[10px]
-              text-slate-400
+              text-slate-500
               truncate
               "
             >
               admin@sms.com
             </p>
-
-
           </div>
-
-
-
         </div>
 
-
-
-
-
         <button
-
           onClick={handleLogout}
-
           className="
           w-full
           flex
@@ -369,35 +273,21 @@ export default function Sidebar() {
           rounded-xl
           text-sm
           font-medium
-          text-rose-400
-          hover:text-rose-300
-          hover:bg-rose-500/10
+          text-rose-600
+          hover:text-rose-700
+          hover:bg-rose-50
           transition-colors
           border
-          border-rose-500/20
+          border-rose-200
+          hover:border-rose-300
           "
-
         >
-
-
           <LogOut
             className="w-4 h-4"
           />
-
-
           Sign Out
-
-
         </button>
-
-
-
       </div>
-
-
-
     </aside>
-
   );
-
 }
