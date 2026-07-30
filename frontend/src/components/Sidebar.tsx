@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -13,6 +13,23 @@ import {
 
 export default function Sidebar() {
   const pathname = usePathname();
+
+  // User details සඳහා state එකක්
+  const [user, setUser] = useState<{ name?: string; email?: string } | null>(null);
+
+  useEffect(() => {
+    // localStorage එකෙන් user දත්ත ලබා ගැනීම
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (error) {
+          console.error('Error parsing user data from localStorage', error);
+        }
+      }
+    }
+  }, []);
 
   const navItems = [
     {
@@ -38,6 +55,16 @@ export default function Sidebar() {
       localStorage.removeItem('user');
       window.location.href = '/login';
     }
+  };
+
+  // Name එකෙන් මුල් අකුරු (Initials) සදා ගැනීම (උදා: "System Admin" -> "SA")
+  const getInitials = (name?: string) => {
+    if (!name) return 'AD';
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
   };
 
   return (
@@ -100,7 +127,7 @@ export default function Sidebar() {
               text-slate-900
               "
             >
-             DSP ACADEMY
+              DSP ACADEMY
             </h1>
 
             <p
@@ -228,7 +255,7 @@ export default function Sidebar() {
             border-indigo-200
             "
           >
-            AD
+            {getInitials(user?.name)}
           </div>
 
           <div
@@ -245,7 +272,7 @@ export default function Sidebar() {
               truncate
               "
             >
-              System Admin
+              {user?.name || 'System Admin'}
             </p>
 
             <p
@@ -255,7 +282,7 @@ export default function Sidebar() {
               truncate
               "
             >
-              admin@sms.com
+              {user?.email || 'admin@sms.com'}
             </p>
           </div>
         </div>
