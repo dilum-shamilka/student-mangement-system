@@ -1,4 +1,4 @@
-package com.sms.dto.request;
+package com.sms.dto.auth;
 
 import jakarta.validation.constraints.NotNull;
 
