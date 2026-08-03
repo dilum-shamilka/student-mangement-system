@@ -1,128 +1,248 @@
 {
   "info": {
     "name": "Student Management System API",
-    "description": "Postman REST API Collection for Spring Boot backend & Supabase PostgreSQL DB",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+
   "item": [
+
     {
-      "name": "Authentication",
+      "name": "AUTH",
+
       "item": [
+
         {
           "name": "Login",
+
           "request": {
+
             "method": "POST",
+
             "header": [
-              { "key": "Content-Type", "value": "application/json" }
+              {
+                "key":"Content-Type",
+                "value":"application/json"
+              }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@sms.com\",\n  \"password\": \"admin123\"\n}"
+
+            "body":{
+
+              "mode":"raw",
+
+              "raw":"{\n \"email\":\"admin@sliit.edu.lk\",\n \"password\":\"admin123\"\n}"
+
             },
-            "url": {
-              "raw": "http://localhost:8080/api/v1/auth/login",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["api", "v1", "auth", "login"]
+
+
+            "url":{
+              "raw":"http://localhost:8080/api/auth/login"
             }
+
           }
+
         },
+
+
         {
-          "name": "Register",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
+          "name":"Register",
+
+          "request":{
+
+            "method":"POST",
+
+            "header":[
+              {
+                "key":"Content-Type",
+                "value":"application/json"
+              }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"teacher@sms.com\",\n  \"password\": \"teacher123\",\n  \"fullName\": \"Dr. Jane Doe\",\n  \"role\": \"ROLE_TEACHER\"\n}"
+
+            "body":{
+
+              "mode":"raw",
+
+              "raw":"{\n \"fullName\":\"New Admin\",\n \"email\":\"newadmin@gmail.com\",\n \"password\":\"admin123\",\n \"role\":\"ADMIN\"\n}"
+
             },
-            "url": {
-              "raw": "http://localhost:8080/api/v1/auth/register",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["api", "v1", "auth", "register"]
+
+
+            "url":{
+              "raw":"http://localhost:8080/api/auth/register"
             }
+
           }
+
         }
+
+
       ]
+
     },
+
+
+
+
     {
-      "name": "Students",
-      "item": [
+      "name":"ADMIN STUDENTS",
+
+      "item":[
+
+
         {
-          "name": "Get All Students",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "http://localhost:8080/api/v1/students",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["api", "v1", "students"]
+          "name":"Get All Students",
+
+          "request":{
+
+            "method":"GET",
+
+            "header":[
+
+              {
+                "key":"Authorization",
+                "value":"Bearer TOKEN"
+              }
+
+            ],
+
+
+            "url":{
+              "raw":"http://localhost:8080/api/admin/students"
             }
+
           }
+
         },
+
+
+
         {
-          "name": "Create Student",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
+          "name":"Create Student",
+
+          "request":{
+
+            "method":"POST",
+
+            "header":[
+
+              {
+                "key":"Content-Type",
+                "value":"application/json"
+              },
+
+              {
+                "key":"Authorization",
+                "value":"Bearer TOKEN"
+              }
+
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"studentIdNumber\": \"STU-2026-099\",\n  \"firstName\": \"Sarah\",\n  \"lastName\": \"Connor\",\n  \"email\": \"sarah.connor@university.edu\",\n  \"phone\": \"+1-555-0999\",\n  \"department\": \"Cyber Security\",\n  \"enrollmentDate\": \"2026-07-01\",\n  \"status\": \"ACTIVE\"\n}"
+
+
+            "body":{
+
+              "mode":"raw",
+
+              "raw":"{\n \"studentIdNumber\":\"STU-2026-100\",\n \"firstName\":\"Saman\",\n \"lastName\":\"Perera\",\n \"email\":\"saman@gmail.com\",\n \"phone\":\"0771234567\",\n \"department\":\"Software Engineering\",\n \"enrollmentDate\":\"2026-08-03\",\n \"status\":\"ACTIVE\"\n}"
+
             },
-            "url": {
-              "raw": "http://localhost:8080/api/v1/students",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["api", "v1", "students"]
+
+
+            "url":{
+
+              "raw":"http://localhost:8080/api/admin/students"
+
             }
+
           }
+
         }
+
+
       ]
+
     },
+
+
+
+
     {
-      "name": "Courses",
-      "item": [
+      "name":"ADMIN COURSES",
+
+      "item":[
+
+
         {
-          "name": "Get All Courses",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "http://localhost:8080/api/v1/courses",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["api", "v1", "courses"]
+
+          "name":"Get Courses",
+
+          "request":{
+
+            "method":"GET",
+
+            "header":[
+
+              {
+                "key":"Authorization",
+                "value":"Bearer TOKEN"
+              }
+
+            ],
+
+            "url":{
+
+              "raw":"http://localhost:8080/api/admin/courses"
+
             }
+
           }
+
         }
+
       ]
+
     },
+
+
+
+
     {
-      "name": "Dashboard",
-      "item": [
+      "name":"DASHBOARD",
+
+      "item":[
+
+
         {
-          "name": "Get Dashboard Statistics",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "http://localhost:8080/api/v1/dashboard/stats",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8080",
-              "path": ["api", "v1", "dashboard", "stats"]
+
+          "name":"Dashboard Stats",
+
+          "request":{
+
+            "method":"GET",
+
+            "header":[
+
+              {
+                "key":"Authorization",
+                "value":"Bearer TOKEN"
+              }
+
+            ],
+
+            "url":{
+
+              "raw":"http://localhost:8080/api/dashboard/stats"
+
             }
+
           }
+
         }
+
+
       ]
+
     }
+
+
   ]
+
 }
