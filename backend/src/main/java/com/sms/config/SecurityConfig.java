@@ -1,6 +1,7 @@
-package com.sms.security;
+package com.sms.config;
 
 
+import com.sms.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

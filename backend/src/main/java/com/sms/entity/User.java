@@ -55,4 +55,7 @@ public class User {
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    public void setFullName(String systemAdmin) {
+    }
 }
