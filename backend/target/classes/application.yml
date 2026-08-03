@@ -6,7 +6,7 @@ spring:
     name: student-management-system
 
   datasource:
-    url: jdbc:mysql://localhost:3306/studentms?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/ studentms?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: dilum123
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,7 +20,10 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  expiration: 86400000
+
 app:
-  jwt:
-    secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-    expiration: 86400000
+  cors:
+    allowed-origins: http://localhost:3000,http://localhost:5173
