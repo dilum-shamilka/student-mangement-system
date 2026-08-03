@@ -33,5 +33,6 @@ C:\Users\WINDOWS\Documents\student mangement system\backend\src\main\java\com\sm
 C:\Users\WINDOWS\Documents\student mangement system\backend\src\main\java\com\sms\dto\auth\RegisterRequest.java
 C:\Users\WINDOWS\Documents\student mangement system\backend\src\main\java\com\sms\dto\enrollment\EnrollmentResponse.java
 C:\Users\WINDOWS\Documents\student mangement system\backend\src\main\java\com\sms\config\DataInitializer.java
+C:\Users\WINDOWS\Documents\student mangement system\backend\src\main\java\com\sms\service\UserDetailsServiceImpl.java
 C:\Users\WINDOWS\Documents\student mangement system\backend\src\main\java\com\sms\security\JwtUtil.java
 C:\Users\WINDOWS\Documents\student mangement system\backend\src\main\java\com\sms\controller\CourseController.java
