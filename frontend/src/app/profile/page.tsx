@@ -8,6 +8,7 @@ import { UserProfileResponse, UserProfileUpdateRequest } from '@/types/profile';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 import { isBlank, isFutureDate, isValidEmail, isValidPhone, minLength } from '@/lib/validation';
+import { Loader2, User, Mail, Lock, Phone, Calendar } from 'lucide-react';
 
 export default function ProfilePage() {
     const { updateUser, logout } = useAuth();
@@ -161,158 +162,192 @@ export default function ProfilePage() {
 
     return (
         <DashboardLayout>
-            <div className="space-y-2">
-                <h1 className="text-4xl font-bold text-slate-900 tracking-tight">My Profile</h1>
-                <p className="text-slate-500 text-lg">Update your personal details and account credentials.</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h1 className="text-3xl md:text-4xl font-extrabold text-[#0B132B] tracking-tight">My Profile</h1>
+                    <p className="text-slate-500 text-base md:text-lg mt-1 font-medium">Update your personal details and account credentials.</p>
+                </div>
             </div>
 
-            {error && <AlertBanner message={error} />}
-            {success && <AlertBanner message={success} variant="success" />}
-            {hasSensitiveChange && (
-                <AlertBanner
-                    message="Changing your email or password will require you to sign in again."
-                    variant="warning"
-                />
-            )}
+            <div className="space-y-3 mb-6">
+                {error && <AlertBanner message={error} />}
+                {success && <AlertBanner message={success} variant="success" />}
+                {hasSensitiveChange && (
+                    <AlertBanner
+                        message="Changing your email or password will require you to sign in again."
+                        variant="warning"
+                    />
+                )}
+            </div>
 
             {loading ? (
-                <div className="card h-48 animate-pulse bg-slate-100 border-none" />
+                <div className="h-48 animate-pulse bg-slate-100/80 rounded-3xl border border-slate-200/50" />
             ) : (
-                <div className="card p-6">
+                <div className="bg-white/95 backdrop-blur-xl border border-slate-200/80 shadow-2xl shadow-slate-200/50 rounded-3xl p-6 md:p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">First Name</label>
-                                <input
-                                    type="text"
-                                    name="firstName"
-                                    required
-                                    value={formData.firstName}
-                                    onChange={handleChange}
-                                    className={cn(
-                                        'input-field',
-                                        fieldErrors.firstName && 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                    )}
-                                    placeholder="John"
-                                    aria-invalid={!!fieldErrors.firstName}
-                                    aria-describedby={fieldErrors.firstName ? 'profile-first-name-error' : undefined}
-                                />
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">First Name</label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <User className="h-5 w-5" />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="firstName"
+                                        required
+                                        value={formData.firstName}
+                                        onChange={handleChange}
+                                        className={cn(
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium',
+                                            fieldErrors.firstName && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
+                                        )}
+                                        placeholder="John"
+                                        aria-invalid={!!fieldErrors.firstName}
+                                        aria-describedby={fieldErrors.firstName ? 'profile-first-name-error' : undefined}
+                                    />
+                                </div>
                                 {fieldErrors.firstName && (
-                                    <p id="profile-first-name-error" className="text-xs text-red-600 ml-1">
+                                    <p id="profile-first-name-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                         {fieldErrors.firstName}
                                     </p>
                                 )}
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">Last Name</label>
-                                <input
-                                    type="text"
-                                    name="lastName"
-                                    required
-                                    value={formData.lastName}
-                                    onChange={handleChange}
-                                    className={cn(
-                                        'input-field',
-                                        fieldErrors.lastName && 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                    )}
-                                    placeholder="Doe"
-                                    aria-invalid={!!fieldErrors.lastName}
-                                    aria-describedby={fieldErrors.lastName ? 'profile-last-name-error' : undefined}
-                                />
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">Last Name</label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <User className="h-5 w-5" />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="lastName"
+                                        required
+                                        value={formData.lastName}
+                                        onChange={handleChange}
+                                        className={cn(
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium',
+                                            fieldErrors.lastName && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
+                                        )}
+                                        placeholder="Doe"
+                                        aria-invalid={!!fieldErrors.lastName}
+                                        aria-describedby={fieldErrors.lastName ? 'profile-last-name-error' : undefined}
+                                    />
+                                </div>
                                 {fieldErrors.lastName && (
-                                    <p id="profile-last-name-error" className="text-xs text-red-600 ml-1">
+                                    <p id="profile-last-name-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                         {fieldErrors.lastName}
                                     </p>
                                 )}
                             </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700 ml-1">Email Address</label>
-                            <input
-                                type="email"
-                                name="email"
-                                required
-                                value={formData.email}
-                                onChange={handleChange}
-                                className={cn(
-                                    'input-field',
-                                    fieldErrors.email && 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                )}
-                                placeholder="name@example.com"
-                                aria-invalid={!!fieldErrors.email}
-                                aria-describedby={fieldErrors.email ? 'profile-email-error' : undefined}
-                            />
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">Email Address</label>
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <Mail className="h-5 w-5" />
+                                </div>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className={cn(
+                                        'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium',
+                                        fieldErrors.email && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
+                                    )}
+                                    placeholder="name@example.com"
+                                    aria-invalid={!!fieldErrors.email}
+                                    aria-describedby={fieldErrors.email ? 'profile-email-error' : undefined}
+                                />
+                            </div>
                             {fieldErrors.email && (
-                                <p id="profile-email-error" className="text-xs text-red-600 ml-1">
+                                <p id="profile-email-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                     {fieldErrors.email}
                                 </p>
                             )}
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700 ml-1">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                className={cn(
-                                    'input-field',
-                                    fieldErrors.password && 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                )}
-                                placeholder="Leave blank to keep current password"
-                                aria-invalid={!!fieldErrors.password}
-                                aria-describedby={fieldErrors.password ? 'profile-password-error' : undefined}
-                            />
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">Password</label>
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <Lock className="h-5 w-5" />
+                                </div>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    className={cn(
+                                        'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium',
+                                        fieldErrors.password && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
+                                    )}
+                                    placeholder="Leave blank to keep current password"
+                                    aria-invalid={!!fieldErrors.password}
+                                    aria-describedby={fieldErrors.password ? 'profile-password-error' : undefined}
+                                />
+                            </div>
                             {fieldErrors.password && (
-                                <p id="profile-password-error" className="text-xs text-red-600 ml-1">
+                                <p id="profile-password-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                     {fieldErrors.password}
                                 </p>
                             )}
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">Phone Number</label>
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    className={cn(
-                                        'input-field',
-                                        fieldErrors.phone && 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                    )}
-                                    placeholder="+94 77 123 4567"
-                                    aria-invalid={!!fieldErrors.phone}
-                                    aria-describedby={fieldErrors.phone ? 'profile-phone-error' : undefined}
-                                />
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">Phone Number</label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <Phone className="h-5 w-5" />
+                                    </div>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className={cn(
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium',
+                                            fieldErrors.phone && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
+                                        )}
+                                        placeholder="+94 77 123 4567"
+                                        aria-invalid={!!fieldErrors.phone}
+                                        aria-describedby={fieldErrors.phone ? 'profile-phone-error' : undefined}
+                                    />
+                                </div>
                                 {fieldErrors.phone && (
-                                    <p id="profile-phone-error" className="text-xs text-red-600 ml-1">
+                                    <p id="profile-phone-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                         {fieldErrors.phone}
                                     </p>
                                 )}
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">Date of Birth</label>
-                                <input
-                                    type="date"
-                                    name="dateOfBirth"
-                                    value={formData.dateOfBirth}
-                                    onChange={handleChange}
-                                    max={maxDate}
-                                    className={cn(
-                                        'input-field',
-                                        fieldErrors.dateOfBirth && 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                    )}
-                                    aria-invalid={!!fieldErrors.dateOfBirth}
-                                    aria-describedby={fieldErrors.dateOfBirth ? 'profile-dob-error' : undefined}
-                                />
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">Date of Birth</label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <Calendar className="h-5 w-5" />
+                                    </div>
+                                    <input
+                                        type="date"
+                                        name="dateOfBirth"
+                                        value={formData.dateOfBirth}
+                                        onChange={handleChange}
+                                        max={maxDate}
+                                        className={cn(
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium',
+                                            fieldErrors.dateOfBirth && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
+                                        )}
+                                        aria-invalid={!!fieldErrors.dateOfBirth}
+                                        aria-describedby={fieldErrors.dateOfBirth ? 'profile-dob-error' : undefined}
+                                    />
+                                </div>
                                 {fieldErrors.dateOfBirth && (
-                                    <p id="profile-dob-error" className="text-xs text-red-600 ml-1">
+                                    <p id="profile-dob-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                         {fieldErrors.dateOfBirth}
                                     </p>
                                 )}
@@ -322,9 +357,16 @@ export default function ProfilePage() {
                         <button
                             type="submit"
                             disabled={saving}
-                            className="btn-primary w-full md:w-auto px-6 py-3"
+                            className="w-full md:w-auto py-3.5 px-8 rounded-2xl bg-gradient-to-r from-[#0B132B] to-[#4361EE] text-white font-semibold shadow-lg shadow-[#0B132B]/15 hover:opacity-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm disabled:opacity-50 active:scale-[0.98]"
                         >
-                            {saving ? 'Saving...' : 'Save Changes'}
+                            {saving ? (
+                                <>
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                    Saving...
+                                </>
+                            ) : (
+                                'Save Changes'
+                            )}
                         </button>
                     </form>
                 </div>

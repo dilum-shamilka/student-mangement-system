@@ -5,7 +5,6 @@ import DashboardLayout from '@/components/layout/DashboardLayout';
 import {
     Search,
     Filter,
-    MoreVertical,
     CheckCircle,
     XCircle,
     Clock,
@@ -13,14 +12,12 @@ import {
     Phone,
     Calendar,
     Trash2,
-    ChevronDown,
     UserCheck,
     UserX,
     Loader2
 } from 'lucide-react';
 import api from '@/lib/api';
 import { StudentResponse, EnrollmentStatus } from '@/types/student';
-import { cn } from '@/lib/utils';
 import { Role } from '@/types/auth';
 import AlertBanner from '@/components/ui/AlertBanner';
 
@@ -95,22 +92,22 @@ export default function StudentsPage() {
         switch (status) {
             case EnrollmentStatus.APPROVED:
                 return (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 border border-emerald-100">
-            <CheckCircle className="h-3 w-3" /> Approved
-          </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 border border-emerald-100">
+                        <CheckCircle className="h-3.5 w-3.5" /> Approved
+                    </span>
                 );
             case EnrollmentStatus.REJECTED:
                 return (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600 border border-red-100">
-            <XCircle className="h-3 w-3" /> Rejected
-          </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-600 border border-rose-100">
+                        <XCircle className="h-3.5 w-3.5" /> Rejected
+                    </span>
                 );
             case EnrollmentStatus.PENDING:
             default:
                 return (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-600 border border-amber-100">
-            <Clock className="h-3 w-3" /> Pending
-          </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-600 border border-amber-100">
+                        <Clock className="h-3.5 w-3.5" /> Pending
+                    </span>
                 );
         }
     };
@@ -119,20 +116,21 @@ export default function StudentsPage() {
         <DashboardLayout allowedRoles={[Role.ADMIN]}>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Student Accounts</h1>
-                    <p className="text-slate-500 text-lg mt-1">Review and manage student self-registrations</p>
+                    <h1 className="text-3xl md:text-4xl font-extrabold text-[#0B132B] tracking-tight">Student Accounts</h1>
+                    <p className="text-slate-500 text-base md:text-lg mt-1 font-medium">Review and manage student self-registrations.</p>
                 </div>
             </div>
-            {error && <AlertBanner message={error} />}
 
-            <div className="card bg-white border-slate-200">
+            {error && <div className="mb-6"><AlertBanner message={error} /></div>}
+
+            <div className="bg-white/95 backdrop-blur-xl border border-slate-200/80 shadow-2xl shadow-slate-200/50 rounded-3xl overflow-hidden">
                 <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row gap-4 items-center justify-between">
                     <div className="relative w-full md:w-96">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                         <input
                             type="text"
                             placeholder="Search by name or email..."
-                            className="input-field pl-10 h-10"
+                            className="w-full pl-10 pr-4 py-2.5 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -140,7 +138,7 @@ export default function StudentsPage() {
                     <div className="flex items-center gap-3 w-full md:w-auto">
                         <Filter className="h-4 w-4 text-slate-400" />
                         <select
-                            className="input-field h-10 w-full md:w-44 text-sm bg-none appearance-none"
+                            className="w-full md:w-44 px-3 py-2.5 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium"
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
                         >
@@ -156,11 +154,11 @@ export default function StudentsPage() {
                     <table className="w-full text-left">
                         <thead>
                         <tr className="bg-slate-50/50 border-b border-slate-100">
-                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Student</th>
-                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Contact</th>
-                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
-                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Joined</th>
-                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+                            <th className="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Student</th>
+                            <th className="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Contact</th>
+                            <th className="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Status</th>
+                            <th className="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Joined</th>
+                            <th className="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider text-right">Actions</th>
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -168,14 +166,14 @@ export default function StudentsPage() {
                             [1, 2, 3].map((i) => (
                                 <tr key={i} className="animate-pulse">
                                     <td colSpan={5} className="px-6 py-8">
-                                        <div className="h-4 bg-slate-100 rounded w-full" />
+                                        <div className="h-4 bg-slate-100 rounded-2xl w-full" />
                                     </td>
                                 </tr>
                             ))
                         ) : filteredStudents.length === 0 ? (
                             <tr>
                                 <td colSpan={5} className="px-6 py-20 text-center">
-                                    <p className="text-slate-400">No students found matching your criteria</p>
+                                    <p className="text-slate-400 font-medium">No students found matching your criteria</p>
                                 </td>
                             </tr>
                         ) : (
@@ -183,26 +181,26 @@ export default function StudentsPage() {
                                 <tr key={student.id} className="hover:bg-slate-50/50 transition-colors group">
                                     <td className="px-6 py-5">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
+                                            <div className="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-100 text-[#4361EE] flex items-center justify-center font-bold shadow-inner">
                                                 {student.firstName.charAt(0)}{student.lastName.charAt(0)}
                                             </div>
                                             <div>
-                                                <p className="font-semibold text-slate-900 leading-none mb-1">
+                                                <p className="font-bold text-slate-900 leading-none mb-1">
                                                     {student.firstName} {student.lastName}
                                                 </p>
-                                                <p className="text-xs text-slate-500">ID: #{student.id}</p>
+                                                <p className="text-xs font-bold text-slate-400">ID: #{student.id}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-5">
                                         <div className="space-y-1">
-                                            <div className="flex items-center gap-2 text-sm text-slate-600">
-                                                <Mail className="h-3 w-3 text-slate-400" />
+                                            <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
+                                                <Mail className="h-3.5 w-3.5 text-slate-400" />
                                                 {student.email}
                                             </div>
                                             {student.phone && (
-                                                <div className="flex items-center gap-2 text-sm text-slate-600">
-                                                    <Phone className="h-3 w-3 text-slate-400" />
+                                                <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
+                                                    <Phone className="h-3.5 w-3.5 text-slate-400" />
                                                     {student.phone}
                                                 </div>
                                             )}
@@ -212,8 +210,8 @@ export default function StudentsPage() {
                                         {getStatusBadge(student.enrollmentStatus)}
                                     </td>
                                     <td className="px-6 py-5">
-                                        <div className="text-sm text-slate-600 flex items-center gap-2">
-                                            <Calendar className="h-3 w-3 text-slate-400" />
+                                        <div className="text-sm text-slate-600 font-medium flex items-center gap-2">
+                                            <Calendar className="h-3.5 w-3.5 text-slate-400" />
                                             {new Date(student.createdAt).toLocaleDateString()}
                                         </div>
                                     </td>
@@ -223,29 +221,29 @@ export default function StudentsPage() {
                                                 <button
                                                     onClick={() => handleUpdateStatus(student.id, EnrollmentStatus.APPROVED)}
                                                     disabled={processingId === student.id}
-                                                    className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                                                    className="p-2.5 text-emerald-600 hover:bg-emerald-50 rounded-2xl transition-all border border-transparent hover:border-emerald-200"
                                                     title="Approve"
                                                 >
-                                                    {processingId === student.id ? <Loader2 className="h-5 w-5 animate-spin" /> : <UserCheck className="h-5 w-5" />}
+                                                    {processingId === student.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserCheck className="h-4 w-4" />}
                                                 </button>
                                             )}
                                             {student.enrollmentStatus !== EnrollmentStatus.REJECTED && (
                                                 <button
                                                     onClick={() => handleUpdateStatus(student.id, EnrollmentStatus.REJECTED)}
                                                     disabled={processingId === student.id}
-                                                    className="p-2 text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
+                                                    className="p-2.5 text-amber-600 hover:bg-amber-50 rounded-2xl transition-all border border-transparent hover:border-amber-200"
                                                     title="Reject"
                                                 >
-                                                    {processingId === student.id ? <Loader2 className="h-5 w-5 animate-spin" /> : <UserX className="h-5 w-5" />}
+                                                    {processingId === student.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserX className="h-4 w-4" />}
                                                 </button>
                                             )}
                                             <button
                                                 onClick={() => handleDelete(student.id)}
                                                 disabled={processingId === student.id}
-                                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                className="p-2.5 text-rose-600 hover:bg-rose-50 rounded-2xl transition-all border border-transparent hover:border-rose-200"
                                                 title="Delete Account"
                                             >
-                                                <Trash2 className="h-5 w-5" />
+                                                <Trash2 className="h-4 w-4" />
                                             </button>
                                         </div>
                                     </td>

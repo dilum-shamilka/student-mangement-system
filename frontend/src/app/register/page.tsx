@@ -1,13 +1,13 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import {useAuth} from '@/context/AuthContext';
-import {UserPlus, Mail, Lock, User, Phone, Calendar, Loader2, CheckCircle2, ShieldAlert} from 'lucide-react';
-import {Role} from '@/types/auth';
+import { useAuth } from '@/context/AuthContext';
+import { UserPlus, Mail, Lock, User, Phone, Calendar, Loader2, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { Role } from '@/types/auth';
 import AlertBanner from '@/components/ui/AlertBanner';
-import {cn} from '@/lib/utils';
-import {isBlank, isFutureDate, isValidEmail, isValidPhone, minLength} from '@/lib/validation';
+import { cn } from '@/lib/utils';
+import { isBlank, isFutureDate, isValidEmail, isValidPhone, minLength } from '@/lib/validation';
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -17,13 +17,13 @@ export default function RegisterPage() {
         password: '',
         phone: '',
         dateOfBirth: '',
-        role: Role.STUDENT, // Default role
+        role: Role.STUDENT,
     });
     const [error, setError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-    const {register} = useAuth();
+    const { register } = useAuth();
 
     const today = new Date();
     const maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate())
@@ -70,10 +70,10 @@ export default function RegisterPage() {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const {name, value} = e.target;
-        setFormData({...formData, [name]: value});
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
         if (fieldErrors[name]) {
-            setFieldErrors((prev) => ({...prev, [name]: ''}));
+            setFieldErrors((prev) => ({ ...prev, [name]: '' }));
         }
     };
 
@@ -95,20 +95,18 @@ export default function RegisterPage() {
 
     if (isSuccess) {
         return (
-            <div className="min-h-screen flex items-center justify-center p-4 gradient-bg">
+            <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
                 <div className="w-full max-w-md">
-                    <div className="card glass p-8 shadow-xl text-center">
-                        <div
-                            className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <CheckCircle2 className="w-10 h-10 text-green-500"/>
+                    <div className="bg-white/90 backdrop-blur-2xl border border-white/20 p-8 shadow-2xl rounded-3xl text-center">
+                        <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-inner">
+                            <CheckCircle2 className="w-9 h-9 text-emerald-600" />
                         </div>
-                        <h1 className="text-3xl font-bold text-slate-900 mb-4">Registration Successful!</h1>
-                        <p className="text-slate-600 mb-8">
-                            Your account has been created with role <span
-                            className="font-semibold text-primary">{formData.role}</span>.
+                        <h1 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">Registration Successful!</h1>
+                        <p className="text-slate-600 mb-8 leading-relaxed">
+                            Your account has been created with role <span className="font-semibold text-indigo-600">{formData.role}</span>.
                             {formData.role === Role.STUDENT && ' It is currently PENDING approval by an administrator.'}
                         </p>
-                        <Link href="/login" className="btn-primary inline-block w-full text-center py-3">
+                        <Link href="/login" className="w-full block py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold shadow-lg shadow-indigo-500/25 hover:from-indigo-500 hover:to-violet-500 transition-all duration-200 text-center">
                             Go to Login
                         </Link>
                     </div>
@@ -118,29 +116,28 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 gradient-bg py-12">
+        <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 py-12">
             <div className="w-full max-w-2xl">
-                <div className="card glass p-8 shadow-xl">
-                    <div className="flex flex-col items-center mb-10">
-                        <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                            <UserPlus className="w-8 h-8 text-primary"/>
+                <div className="bg-white/90 backdrop-blur-2xl border border-white/20 p-8 md:p-10 shadow-2xl rounded-3xl">
+                    <div className="flex flex-col items-center mb-8">
+                        <div className="w-16 h-16 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+                            <UserPlus className="w-8 h-8 text-indigo-600" />
                         </div>
-                        <h1 className="text-3xl font-bold text-slate-900">Create Account</h1>
-                        <p className="text-slate-500 mt-2 text-center">
-                            Register as a Student, Admin
+                        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Create Account</h1>
+                        <p className="text-slate-500 mt-1 text-center text-sm md:text-base">
+                            Register as a Student or Administrator
                         </p>
                     </div>
 
-                    {error && <AlertBanner message={error}/>}
+                    {error && <div className="mb-6"><AlertBanner message={error} /></div>}
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">First Name</label>
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">First Name</label>
                                 <div className="relative">
-                                    <div
-                                        className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                        <User className="h-5 w-5"/>
+                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <User className="h-5 w-5" />
                                     </div>
                                     <input
                                         type="text"
@@ -149,23 +146,22 @@ export default function RegisterPage() {
                                         value={formData.firstName}
                                         onChange={handleChange}
                                         className={cn(
-                                            'input-field pl-10',
-                                            fieldErrors.firstName && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm',
+                                            fieldErrors.firstName && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                         )}
                                         placeholder="John"
                                     />
                                 </div>
                                 {fieldErrors.firstName && (
-                                    <p className="text-xs text-red-600 ml-1">{fieldErrors.firstName}</p>
+                                    <p className="text-xs font-medium text-rose-600 ml-1 mt-1">{fieldErrors.firstName}</p>
                                 )}
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">Last Name</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">Last Name</label>
                                 <div className="relative">
-                                    <div
-                                        className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                        <User className="h-5 w-5"/>
+                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <User className="h-5 w-5" />
                                     </div>
                                     <input
                                         type="text"
@@ -174,24 +170,23 @@ export default function RegisterPage() {
                                         value={formData.lastName}
                                         onChange={handleChange}
                                         className={cn(
-                                            'input-field pl-10',
-                                            fieldErrors.lastName && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm',
+                                            fieldErrors.lastName && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                         )}
                                         placeholder="Doe"
                                     />
                                 </div>
                                 {fieldErrors.lastName && (
-                                    <p className="text-xs text-red-600 ml-1">{fieldErrors.lastName}</p>
+                                    <p className="text-xs font-medium text-rose-600 ml-1 mt-1">{fieldErrors.lastName}</p>
                                 )}
                             </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700 ml-1">Email address</label>
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">Email Address</label>
                             <div className="relative">
-                                <div
-                                    className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                    <Mail className="h-5 w-5"/>
+                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <Mail className="h-5 w-5" />
                                 </div>
                                 <input
                                     type="email"
@@ -200,23 +195,22 @@ export default function RegisterPage() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     className={cn(
-                                        'input-field pl-10',
-                                        fieldErrors.email && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                        'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm',
+                                        fieldErrors.email && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                     )}
                                     placeholder="name@example.com"
                                 />
                             </div>
                             {fieldErrors.email && (
-                                <p className="text-xs text-red-600 ml-1">{fieldErrors.email}</p>
+                                <p className="text-xs font-medium text-rose-600 ml-1 mt-1">{fieldErrors.email}</p>
                             )}
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700 ml-1">Password</label>
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">Password</label>
                             <div className="relative">
-                                <div
-                                    className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                    <Lock className="h-5 w-5"/>
+                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <Lock className="h-5 w-5" />
                                 </div>
                                 <input
                                     type="password"
@@ -225,45 +219,41 @@ export default function RegisterPage() {
                                     value={formData.password}
                                     onChange={handleChange}
                                     className={cn(
-                                        'input-field pl-10',
-                                        fieldErrors.password && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                        'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm',
+                                        fieldErrors.password && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                     )}
                                     placeholder="••••••••"
                                 />
                             </div>
                             {fieldErrors.password && (
-                                <p className="text-xs text-red-600 ml-1">{fieldErrors.password}</p>
+                                <p className="text-xs font-medium text-rose-600 ml-1 mt-1">{fieldErrors.password}</p>
                             )}
                         </div>
 
-                        {/* Role Selection Dropdown */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700 ml-1">Account Role</label>
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">Account Role</label>
                             <div className="relative">
-                                <div
-                                    className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                    <ShieldAlert className="h-5 w-5"/>
+                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <ShieldAlert className="h-5 w-5" />
                                 </div>
                                 <select
                                     name="role"
                                     value={formData.role}
                                     onChange={handleChange}
-                                    className="input-field pl-10 bg-white"
+                                    className="w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm cursor-pointer"
                                 >
                                     <option value={Role.ADMIN}>Admin</option>
                                     <option value={Role.STUDENT}>Student</option>
-
                                 </select>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">Phone Number</label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">Phone Number</label>
                                 <div className="relative">
-                                    <div
-                                        className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                        <Phone className="h-5 w-5"/>
+                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <Phone className="h-5 w-5" />
                                     </div>
                                     <input
                                         type="tel"
@@ -271,23 +261,22 @@ export default function RegisterPage() {
                                         value={formData.phone}
                                         onChange={handleChange}
                                         className={cn(
-                                            'input-field pl-10',
-                                            fieldErrors.phone && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm',
+                                            fieldErrors.phone && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                         )}
                                         placeholder="+94 77 123 4567"
                                     />
                                 </div>
                                 {fieldErrors.phone && (
-                                    <p className="text-xs text-red-600 ml-1">{fieldErrors.phone}</p>
+                                    <p className="text-xs font-medium text-rose-600 ml-1 mt-1">{fieldErrors.phone}</p>
                                 )}
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 ml-1">Date of Birth</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">Date of Birth</label>
                                 <div className="relative">
-                                    <div
-                                        className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                        <Calendar className="h-5 w-5"/>
+                                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <Calendar className="h-5 w-5" />
                                     </div>
                                     <input
                                         type="date"
@@ -296,13 +285,13 @@ export default function RegisterPage() {
                                         onChange={handleChange}
                                         max={maxDate}
                                         className={cn(
-                                            'input-field pl-10',
-                                            fieldErrors.dateOfBirth && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm',
+                                            fieldErrors.dateOfBirth && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                         )}
                                     />
                                 </div>
                                 {fieldErrors.dateOfBirth && (
-                                    <p className="text-xs text-red-600 ml-1">{fieldErrors.dateOfBirth}</p>
+                                    <p className="text-xs font-medium text-rose-600 ml-1 mt-1">{fieldErrors.dateOfBirth}</p>
                                 )}
                             </div>
                         </div>
@@ -310,20 +299,20 @@ export default function RegisterPage() {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="btn-primary w-full py-3 flex items-center justify-center gap-2 text-lg mt-4"
+                            className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold shadow-lg shadow-indigo-500/25 hover:from-indigo-500 hover:to-violet-500 transition-all duration-200 flex items-center justify-center gap-2 text-base mt-6 disabled:opacity-50"
                         >
                             {isSubmitting ? (
-                                <Loader2 className="h-5 w-5 animate-spin"/>
+                                <Loader2 className="h-5 w-5 animate-spin" />
                             ) : (
                                 'Create Account'
                             )}
                         </button>
                     </form>
 
-                    <div className="mt-8 pt-6 border-t border-slate-200 text-center">
-                        <p className="text-slate-600">
+                    <div className="mt-8 pt-6 border-t border-slate-200/80 text-center">
+                        <p className="text-slate-600 text-sm">
                             Already have an account?{' '}
-                            <Link href="/login" className="text-primary font-semibold hover:underline">
+                            <Link href="/login" className="text-indigo-600 font-semibold hover:text-indigo-700 hover:underline">
                                 Sign In
                             </Link>
                         </p>

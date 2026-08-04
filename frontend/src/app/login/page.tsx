@@ -55,32 +55,34 @@ function LoginPageContent() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 gradient-bg">
+        <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
             <div className="w-full max-w-md">
-                <div className="card glass p-8 shadow-xl">
+                <div className="bg-white/90 backdrop-blur-2xl border border-white/20 p-8 md:p-10 shadow-2xl rounded-3xl">
                     <div className="flex flex-col items-center mb-8">
-                        <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                            <LogIn className="w-8 h-8 text-primary" />
+                        <div className="w-16 h-16 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+                            <LogIn className="w-8 h-8 text-indigo-600" />
                         </div>
-                        <h1 className="text-3xl font-bold text-slate-900">Welcome Back</h1>
-                        <p className="text-slate-500 mt-2 text-center">
+                        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Welcome Back</h1>
+                        <p className="text-slate-500 mt-1 text-center text-sm">
                             Sign in to manage your student records and courses
                         </p>
                     </div>
 
-                    {wasRegistered && (
-                        <AlertBanner message="Registration successful. Please sign in." variant="success" />
-                    )}
-                    {requiresReauth && (
-                        <AlertBanner message="Your email or password was updated. Please sign in again." variant="warning" />
-                    )}
-                    {error && <AlertBanner message={error} />}
+                    <div className="space-y-3 mb-6">
+                        {wasRegistered && (
+                            <AlertBanner message="Registration successful. Please sign in." variant="success" />
+                        )}
+                        {requiresReauth && (
+                            <AlertBanner message="Your email or password was updated. Please sign in again." variant="warning" />
+                        )}
+                        {error && <AlertBanner message={error} />}
+                    </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700 ml-1">Email address</label>
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">Email Address</label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                                     <Mail className="h-5 w-5" />
                                 </div>
                                 <input
@@ -95,8 +97,8 @@ function LoginPageContent() {
                                         }
                                     }}
                                     className={cn(
-                                        'input-field pl-10',
-                                        fieldErrors.email && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                        'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm',
+                                        fieldErrors.email && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                     )}
                                     placeholder="name@example.com"
                                     aria-invalid={!!fieldErrors.email}
@@ -104,16 +106,16 @@ function LoginPageContent() {
                                 />
                             </div>
                             {fieldErrors.email && (
-                                <p id="login-email-error" className="text-xs text-red-600 ml-1">
+                                <p id="login-email-error" className="text-xs font-medium text-rose-600 ml-1 mt-1">
                                     {fieldErrors.email}
                                 </p>
                             )}
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700 ml-1">Password</label>
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-bold text-slate-600 uppercase tracking-wider ml-1">Password</label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                                     <Lock className="h-5 w-5" />
                                 </div>
                                 <input
@@ -128,8 +130,8 @@ function LoginPageContent() {
                                         }
                                     }}
                                     className={cn(
-                                        'input-field pl-10',
-                                        fieldErrors.password && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                        'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all shadow-sm',
+                                        fieldErrors.password && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                     )}
                                     placeholder="••••••••"
                                     aria-invalid={!!fieldErrors.password}
@@ -137,7 +139,7 @@ function LoginPageContent() {
                                 />
                             </div>
                             {fieldErrors.password && (
-                                <p id="login-password-error" className="text-xs text-red-600 ml-1">
+                                <p id="login-password-error" className="text-xs font-medium text-rose-600 ml-1 mt-1">
                                     {fieldErrors.password}
                                 </p>
                             )}
@@ -146,7 +148,7 @@ function LoginPageContent() {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="btn-primary w-full py-3 flex items-center justify-center gap-2 text-lg"
+                            className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold shadow-lg shadow-indigo-500/25 hover:from-indigo-500 hover:to-violet-500 transition-all duration-200 flex items-center justify-center gap-2 text-base mt-2 disabled:opacity-50"
                         >
                             {isSubmitting ? (
                                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -156,11 +158,11 @@ function LoginPageContent() {
                         </button>
                     </form>
 
-                    <div className="mt-8 pt-6 border-t border-slate-200 text-center">
-                        <p className="text-slate-600">
+                    <div className="mt-8 pt-6 border-t border-slate-200/80 text-center">
+                        <p className="text-slate-600 text-sm">
                             Don&apos;t have an account?{' '}
-                            <Link href="/register" className="text-primary font-semibold hover:underline">
-                                Register as a Admin or Student
+                            <Link href="/register" className="text-indigo-600 font-semibold hover:text-indigo-700 hover:underline">
+                                Register Here
                             </Link>
                         </p>
                     </div>
@@ -174,8 +176,8 @@ export default function LoginPage() {
     return (
         <Suspense
             fallback={
-                <div className="min-h-screen flex items-center justify-center p-4 gradient-bg">
-                    <div className="card glass p-8 shadow-xl text-slate-600">Loading login…</div>
+                <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
+                    <div className="bg-white/90 backdrop-blur-xl p-8 rounded-2xl shadow-xl text-slate-600 font-medium">Loading login…</div>
                 </div>
             }
         >

@@ -5,7 +5,6 @@ import DashboardLayout from '@/components/layout/DashboardLayout';
 import {
     Plus,
     Search,
-    MoreVertical,
     BookOpen,
     Edit2,
     Trash2,
@@ -195,29 +194,30 @@ export default function CoursesPage() {
         <DashboardLayout>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-4xl font-bold text-slate-900 tracking-tight">Academic Courses</h1>
-                    <p className="text-slate-500 text-lg mt-1">Manage the curriculum and course certificates</p>
+                    <h1 className="text-3xl md:text-4xl font-extrabold text-[#0B132B] tracking-tight">Academic Courses</h1>
+                    <p className="text-slate-500 text-base md:text-lg mt-1 font-medium">Manage the curriculum and course certificates</p>
                 </div>
                 {canManageCourses && (
                     <button
                         onClick={() => handleOpenModal()}
-                        className="btn-primary flex items-center gap-2 h-12 px-6"
+                        className="py-3 px-5 rounded-2xl bg-gradient-to-r from-[#0B132B] to-[#4361EE] text-white font-semibold shadow-lg shadow-[#0B132B]/15 hover:opacity-95 transition-all duration-300 flex items-center justify-center gap-2 h-12 active:scale-[0.98]"
                     >
                         <Plus className="h-5 w-5" />
                         Add New Course
                     </button>
                 )}
             </div>
-            {error && <AlertBanner message={error} />}
 
-            <div className="card bg-white border-slate-200">
-                <div className="p-6 border-b border-slate-100">
+            {error && <div className="mb-6"><AlertBanner message={error} /></div>}
+
+            <div className="bg-white/90 backdrop-blur-xl border border-slate-200/80 shadow-2xl shadow-slate-200/50 rounded-3xl overflow-hidden">
+                <div className="p-6 border-b border-slate-100 bg-slate-50/50">
                     <div className="relative w-full md:w-96">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                         <input
                             type="text"
                             placeholder="Search by name or code..."
-                            className="input-field pl-10 h-10"
+                            className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -227,26 +227,26 @@ export default function CoursesPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
                     {loading ? (
                         [1, 2, 3].map((i) => (
-                            <div key={i} className="card h-48 animate-pulse bg-slate-50 border-none" />
+                            <div key={i} className="h-48 animate-pulse bg-slate-100/80 rounded-2xl border border-slate-200/50" />
                         ))
                     ) : filteredCourses.length === 0 ? (
                         <div className="col-span-full py-20 text-center">
-                            <p className="text-slate-400">No courses discovered yet.</p>
+                            <p className="text-slate-400 font-semibold">No courses discovered yet.</p>
                         </div>
                     ) : (
                         filteredCourses.map((course) => (
-                            <div key={course.id} className="card p-6 flex flex-col justify-between hover:shadow-md transition-shadow group relative border-slate-100">
+                            <div key={course.id} className="bg-white border border-slate-200/80 p-6 rounded-3xl flex flex-col justify-between hover:shadow-xl hover:border-indigo-200 transition-all duration-300 group relative">
                                 {canManageCourses && (
-                                    <div className="absolute top-4 right-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div className="absolute top-4 right-4 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button
                                             onClick={() => handleOpenModal(course)}
-                                            className="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                                            className="p-2 text-slate-400 hover:text-[#4361EE] hover:bg-indigo-50 rounded-2xl transition-colors"
                                         >
                                             <Edit2 className="h-4 w-4" />
                                         </button>
                                         <button
                                             onClick={() => handleDelete(course.id)}
-                                            className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-2xl transition-colors"
                                         >
                                             <Trash2 className="h-4 w-4" />
                                         </button>
@@ -254,12 +254,12 @@ export default function CoursesPage() {
                                 )}
 
                                 <div>
-                                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 text-primary">
+                                    <div className="w-12 h-12 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-center mb-4 text-[#4361EE] shadow-inner">
                                         <BookOpen className="h-6 w-6" />
                                     </div>
-                                    <h3 className="text-lg font-bold text-slate-900 mb-1">{course.courseName}</h3>
-                                    <p className="text-sm font-semibold text-primary mb-3">{course.courseCode}</p>
-                                    <p className="text-sm text-slate-500 line-clamp-2 min-h-10">
+                                    <h3 className="text-lg font-bold text-[#0B132B] mb-1">{course.courseName}</h3>
+                                    <p className="text-xs font-extrabold text-[#4361EE] uppercase tracking-wider mb-3">{course.courseCode}</p>
+                                    <p className="text-sm text-slate-500 line-clamp-2 min-h-[40px] leading-relaxed font-medium">
                                         {course.description || 'No description provided for this course.'}
                                     </p>
                                     {isStudent && (
@@ -268,7 +268,7 @@ export default function CoursesPage() {
                                                 <button
                                                     type="button"
                                                     disabled
-                                                    className="w-full h-10 rounded-lg bg-emerald-50 text-emerald-700 font-semibold text-sm border border-emerald-100"
+                                                    className="w-full h-11 rounded-2xl bg-emerald-50 text-emerald-700 font-semibold text-sm border border-emerald-200/60 shadow-sm flex items-center justify-center"
                                                 >
                                                     Enrolled
                                                 </button>
@@ -277,7 +277,7 @@ export default function CoursesPage() {
                                                     type="button"
                                                     onClick={() => handleEnroll(course.id)}
                                                     disabled={enrollingId === course.id}
-                                                    className="w-full h-10 rounded-lg bg-slate-900 text-white font-semibold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                                                    className="w-full h-11 rounded-2xl bg-[#0B132B] text-white font-semibold text-sm hover:bg-[#1C2541] transition-all shadow-md shadow-[#0B132B]/10 flex items-center justify-center gap-2 active:scale-[0.98]"
                                                 >
                                                     {enrollingId === course.id ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Enroll'}
                                                 </button>
@@ -286,12 +286,12 @@ export default function CoursesPage() {
                                     )}
                                 </div>
 
-                                <div className="mt-6 pt-6 border-t border-slate-50 flex items-center justify-between text-xs text-slate-400">
-                                    <div className="flex items-center gap-1">
-                                        <Clock className="h-3 w-3" />
+                                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-medium">
+                                    <div className="flex items-center gap-1.5">
+                                        <Clock className="h-3.5 w-3.5" />
                                         Added {new Date(course.createdAt).toLocaleDateString()}
                                     </div>
-                                    <div className="font-medium text-slate-500 uppercase tracking-tighter">ID: #{course.id}</div>
+                                    <div className="font-bold text-slate-500 uppercase tracking-wider">ID: #{course.id}</div>
                                 </div>
                             </div>
                         ))
@@ -302,31 +302,31 @@ export default function CoursesPage() {
             {/* Course Modal */}
             {isModalOpen && canManageCourses && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={handleCloseModal} />
-                    <div className="card glass w-full max-w-lg relative z-10 shadow-2xl animate-in zoom-in-95 duration-200">
-                        <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-                            <h2 className="text-xl font-bold text-slate-900">
+                    <div className="fixed inset-0 bg-[#0B132B]/50 backdrop-blur-md transition-opacity" onClick={handleCloseModal} />
+                    <div className="bg-white/95 backdrop-blur-2xl border border-white/20 w-full max-w-lg relative z-10 shadow-2xl rounded-3xl animate-in zoom-in-95 duration-200 overflow-hidden">
+                        <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                            <h2 className="text-xl font-bold text-[#0B132B]">
                                 {editingCourse ? 'Edit Course' : 'Create New Course'}
                             </h2>
                             <button
                                 onClick={handleCloseModal}
-                                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg"
+                                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-2xl transition-colors"
                             >
                                 <X className="h-5 w-5" />
                             </button>
                         </div>
 
                         <form onSubmit={handleSubmit} className="p-6 space-y-5">
-                            <div className="space-y-2">
-                                <label className="text-sm font-semibold text-slate-700 ml-1">Course Name</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">Course Name</label>
                                 <div className="relative">
-                                    <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                    <FileText className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                                     <input
                                         type="text"
                                         required
                                         className={cn(
-                                            'input-field pl-10 h-11',
-                                            formErrors.courseName && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium',
+                                            formErrors.courseName && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                         )}
                                         placeholder="e.g. Introduction to Computer Science"
                                         value={formData.courseName}
@@ -341,16 +341,16 @@ export default function CoursesPage() {
                                     />
                                 </div>
                                 {formErrors.courseName && (
-                                    <p id="course-name-error" className="text-xs text-red-600 ml-1">
+                                    <p id="course-name-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                         {formErrors.courseName}
                                     </p>
                                 )}
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-semibold text-slate-700 ml-1">Course Code</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">Course Code</label>
                                 <div className="relative">
-                                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                    <Hash className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                                     <input
                                         type="text"
                                         required
@@ -358,8 +358,8 @@ export default function CoursesPage() {
                                         pattern="[A-Z0-9-]{2,20}"
                                         title="Use 2-20 letters, numbers, or hyphens."
                                         className={cn(
-                                            'input-field pl-10 h-11 uppercase font-mono',
-                                            formErrors.courseCode && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                            'w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm font-mono uppercase focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-bold',
+                                            formErrors.courseCode && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                         )}
                                         placeholder="e.g. CS101"
                                         value={formData.courseCode}
@@ -379,18 +379,18 @@ export default function CoursesPage() {
                                     />
                                 </div>
                                 {formErrors.courseCode && (
-                                    <p id="course-code-error" className="text-xs text-red-600 ml-1">
+                                    <p id="course-code-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                         {formErrors.courseCode}
                                     </p>
                                 )}
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-semibold text-slate-700 ml-1">Description</label>
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-extrabold text-slate-600 uppercase tracking-wider ml-1">Description</label>
                                 <textarea
                                     className={cn(
-                                        'input-field min-h-32 py-3 resize-none',
-                                        formErrors.description && 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                                        'w-full px-4 py-3 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-800 placeholder-slate-400 text-sm min-h-[120px] resize-none focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-[#4361EE] transition-all shadow-sm font-medium',
+                                        formErrors.description && 'border-rose-300 focus:border-rose-500 focus:ring-rose-200 bg-rose-50/30'
                                     )}
                                     placeholder="Optional course overview..."
                                     value={formData.description}
@@ -404,7 +404,7 @@ export default function CoursesPage() {
                                     aria-describedby={formErrors.description ? 'course-description-error' : undefined}
                                 />
                                 {formErrors.description && (
-                                    <p id="course-description-error" className="text-xs text-red-600 ml-1">
+                                    <p id="course-description-error" className="text-xs font-semibold text-rose-600 ml-1 mt-1">
                                         {formErrors.description}
                                     </p>
                                 )}
@@ -414,14 +414,14 @@ export default function CoursesPage() {
                                 <button
                                     type="button"
                                     onClick={handleCloseModal}
-                                    className="flex-1 px-4 py-3 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50"
+                                    className="flex-1 px-4 py-3.5 rounded-2xl border border-slate-200/80 text-slate-600 font-semibold hover:bg-slate-100 transition-colors text-sm"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="flex-[2] btn-primary h-12 flex items-center justify-center gap-2"
+                                    className="flex-[2] py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#0B132B] to-[#4361EE] text-white font-semibold shadow-lg shadow-[#0B132B]/15 hover:opacity-95 transition-all duration-300 flex items-center justify-center gap-2 text-sm disabled:opacity-50 active:scale-[0.98]"
                                 >
                                     {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Save Course'}
                                 </button>

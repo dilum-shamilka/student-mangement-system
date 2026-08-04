@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { useRouter, usePathname } from 'next/navigation';
 import { User, LoginRequest, RegisterRequest, AuthResponse, Role } from '@/types/auth';
 import api from '@/lib/api';
+import { Loader2 } from 'lucide-react';
 
 interface AuthContextType {
     user: User | null;
@@ -114,8 +115,10 @@ export const ProtectedRoute = ({ children, allowedRoles }: { children: ReactNode
 
     if (loading || !isAuthenticated || (allowedRoles && user && !allowedRoles.includes(user.role))) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            <div className="flex items-center justify-center min-h-screen bg-slate-50/50">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-inner">
+                    <Loader2 className="h-6 w-6 animate-spin" />
+                </div>
             </div>
         );
     }
